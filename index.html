@@ -1,28 +1,29 @@
 <html>
 <head>
 	<title>Chat App</title>
+	<link rel="stylesheet" type="text/css" href="../public/stylesheets/main.css">
 	<style>
-		#chat {
-			height: 500px;
-		}
+	#chat {
+	height: 500px;
+	}
 
-		#contentWrap {
-			display: none;
-		}
+	#contentWrap {
+		display: none;
+	}
 
-		#chatWrap {
-			float: left;
-			border: 1px #000 solid;
-		}
+	#chatWrap {
+		float: left;
+		border: 1px #000 solid;
+	}
 
-		.error {
-			color: red;
-		}
+	.error {
+		color: red;
+	}
 
-		.whisper {
-			color: gray;
-			font-style: italic;
-		}
+	.whisper {
+		color: gray;
+		font-style: italic;
+	}
 
 	</style>
 </head>
@@ -93,7 +94,7 @@
 			});
 
 			socket.on('load old msgs', function(documents){
-				for(var i=0; i < documents.length; i++) {
+				for(var i=documents.length-1; i >= 0; i--) {
 					displayMsg(documents[i]);
 				}
 			});
