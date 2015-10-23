@@ -26,7 +26,8 @@ app.get('/', function (req, res) {
 });
 
 io.sockets.on('connection', function(socket) {
-	Chat.find({}, function(err, documents) {
+	var query = Chat.find({});
+	query.sort('-created').exec(function(err, documents) {
 		if(err) throw err;
 		socket.emit('load old msgs', documents);
 	});
