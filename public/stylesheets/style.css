@@ -1,0 +1,92 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	color: white;
+}
+
+#container {
+	width: 320px;
+	margin: 0 auto;
+}
+
+#nickWrap {
+	width: 100%;
+	background-color: gray;
+	text-align: center;
+	padding: 15px;
+	border-radius: 25px;
+	margin-top: 200px, 0px, 0px, 0px auto;
+	/*margin: 0 auto;*/
+}
+
+#nickWrap input[id="nickname"] {
+	color: black;
+	text-align: center;
+}
+
+#nickWrap input[type="submit"] {
+	background-color: white;
+	color: black;
+	border: 0px;
+	border-radius: 5px;
+	vertical-align: center;
+}
+
+#chat {
+	height: 500px;
+	background-color: white;
+	color: black;
+	padding: 15px;
+}
+
+#contentWrap {
+	display: none;
+	position: relative;
+	top: 50px;
+}
+
+#chatWrap {
+	/*float: left;*/
+	/*border: 1px #000 solid;*/
+	width: 100%;
+	background-color: gray;
+	/*text-align: center;*/
+	padding: 15px;
+	border-radius: 25px;
+	margin: 0 auto;
+}
+
+#chatWrap input[type="submit"] {
+	background-color: white;
+	color: black;
+	border: 0px;
+	border-radius: 5px;
+	vertical-align: center;
+}
+
+#chatWrap input[id="message"] {
+	width: 77%;
+	color: black;
+	margin-top: 10px;
+}
+
+#users {
+	margin-top: 75px;
+	color: black;
+	text-align: center;
+}
+
+#results {
+	color: black;
+}
+
+.error {
+	color: red;
+}
+
+.whisper {
+	color: gray;
+	font-style: italic;
+}
