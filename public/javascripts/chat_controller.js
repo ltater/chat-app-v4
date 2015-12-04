@@ -50,8 +50,6 @@
 				displayMsg(data);
 				$.ajax({
 					// url: "http://api.nytimes.com/svc/topstories/v1/sports.json?api-key=NYT_API_KEY",
-					url: "http://api.nytimes.com/svc/topstories/v1/sports.json?api-key=a69aed50284cd3aad7fbf1599e3f1614:8:68128413",
-					//url: "NYT_API_KEY",
 					data: {
 						"section": "Sports"
 					},
