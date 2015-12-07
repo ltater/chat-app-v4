@@ -115,6 +115,7 @@
 					</form>
 				</div>
 			</div>
+			<div id="results"></div>
 			<div id="users"></div>
 		</div>
 	</div>
@@ -182,7 +183,10 @@
 			socket.on('whisper', function(data) {
 				$chat.append("<span class='whisper'>" + "<b>" + data.nick + ": </b>" + data.msg + "</span>" + "<br/>");
 			});
+
 		});
+
+		
 	</script>
 </body>
 </html>
