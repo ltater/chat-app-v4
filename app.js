@@ -11,18 +11,19 @@ server.listen(3000);
 //Mongoose Connection
 mongoose.connect(process.env.MONGO_DB_CONN_CHATAPPS);
 
-var NYT_API_KEY = process.env.NYT_API_KEY;
-
 //Document Schema
 var chatSchema = mongoose.Schema({
 	nick: String,
 	msg: String,
+	article: Object,
 	created: {type: Date, default: Date.now}
 });
 
 //Create Collection
 var Chat = mongoose.model('message', chatSchema);
 
+//NYT API Key
+var NYT_API_KEY = process.env.NYT_API_KEY;
 
 app.get('/', function (req, res) {
 	res.sendfile(__dirname + '/index.html');
@@ -52,6 +53,9 @@ io.sockets.on('connection', function(socket) {
 
 	socket.on('send message', function(data, callback) {
 		var msg = data.trim();
+		var apiArticle = findArticle();
+		console.log(apiArticle);
+
 		if(msg.substr(0,3) === '/w ') {
 			msg = msg.substr(3);
 			var ind = msg.indexOf(' ');
@@ -70,30 +74,33 @@ io.sockets.on('connection', function(socket) {
 			
 		} else {
 			//save messages to mongodb
-			var newMsg = new Chat({msg: msg, nick: socket.nickname});
-			newMsg.save(function(err) {
-				if(err) throw err; 
-				//send to everyone including the person who sent the message
-				io.sockets.emit('new message', {msg: msg, nick: socket.nickname});
+			var newMsg = new Chat({msg: msg, nick: socket.nickname, article: "apiArticle"});
+
+			function findArticle() {
 				var apiCall = "http://api.nytimes.com/svc/topstories/v1/sports.json?api-key=" + NYT_API_KEY;
-				console.log(apiCall);
 
 				request(apiCall, function(err, resp, object) {
 					var object = JSON.parse(object);
 					var articles = object.results;
-					var usedArticle = [];
+					var randomArticle = articles[Math.floor(Math.random()*articles.length)];
+					console.log("random article inside the function");
+					return randomArticle;
 
-					function findTitles(articles) {
-						var randomArticle = articles[Math.floor(Math.random()*articles.length)];
-						var randomArticleTitle = randomArticle.title;
-						var randomArticleURL = randomArticle.url;
-						console.log(randomArticleTitle);
-						console.log(randomArticleURL);
-					}
-
-					findTitles(articles);
-					// console.log(usedArticle);
+					// function findTitles(articles) {
+					// 	var randomArticle = articles[Math.floor(Math.random()*articles.length)];
+					// 	var randomArticleTitle = randomArticle.title;
+					// 	var randomArticleURL = randomArticle.url;
+					// 	console.log(randomArticleTitle);
+					// 	console.log(randomArticleURL);
+					// }
+					// var apiArticle = findTitles(articles);
 				});
+			}
+			
+			newMsg.save(function(err) {
+				if(err) throw err; 
+				//send to everyone including the person who sent the message
+				io.sockets.emit('new message', {msg: msg, nick: socket.nickname, article: "apiArticle"});
 				// send to everyone but the person who sent the message
 				//socket.broadcast.emit('new message', data);
 			});
